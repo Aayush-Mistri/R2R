@@ -8,6 +8,12 @@ import { FinanceProvider } from './context/FinanceContext.jsx';
 import { Toaster } from './components/ui/toast.jsx';
 import './index.css';
 
+if (import.meta.env.PROD && 'serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch(() => {});
+  });
+}
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ThemeProvider>

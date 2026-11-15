@@ -9,6 +9,8 @@ export function ThemeProvider({ children }) {
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', theme === 'dark');
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute('content', theme === 'dark' ? '#09090b' : '#fafafa');
     try {
       localStorage.setItem('r2r-theme', theme);
     } catch {
