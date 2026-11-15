@@ -1,4 +1,5 @@
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import BootScreen from './components/BootScreen.jsx';
 import Layout from './components/Layout.jsx';
 import Landing from './pages/Landing.jsx';
@@ -12,6 +13,14 @@ import Accounts from './pages/Accounts.jsx';
 import Categories from './pages/Categories.jsx';
 import Settings from './pages/Settings.jsx';
 import { useAuth } from './context/AuthContext.jsx';
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
 
 function RequireAuth({ children }) {
   const { state } = useAuth();
@@ -49,41 +58,44 @@ function Fallback() {
 
 export default function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route
-        path="/login"
-        element={
-          <GuestOnly>
-            <Login />
-          </GuestOnly>
-        }
-      />
-      <Route
-        path="/register"
-        element={
-          <GuestOnly>
-            <Register />
-          </GuestOnly>
-        }
-      />
-      <Route path="/reset-pin" element={<ResetPin />} />
-      <Route path="/pin" element={<PinPage />} />
+    <>
+      <ScrollToTop />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route
+          path="/login"
+          element={
+            <GuestOnly>
+              <Login />
+            </GuestOnly>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <GuestOnly>
+              <Register />
+            </GuestOnly>
+          }
+        />
+        <Route path="/reset-pin" element={<ResetPin />} />
+        <Route path="/pin" element={<PinPage />} />
 
-      <Route
-        element={
-          <RequireAuth>
-            <Layout />
-          </RequireAuth>
-        }
-      >
-        <Route path="/transactions" element={<Transactions />} />
-        <Route path="/accounts" element={<Accounts />} />
-        <Route path="/categories" element={<Categories />} />
-        <Route path="/settings" element={<Settings />} />
-      </Route>
+        <Route
+          element={
+            <RequireAuth>
+              <Layout />
+            </RequireAuth>
+          }
+        >
+          <Route path="/transactions" element={<Transactions />} />
+          <Route path="/accounts" element={<Accounts />} />
+          <Route path="/categories" element={<Categories />} />
+          <Route path="/settings" element={<Settings />} />
+        </Route>
 
-      <Route path="*" element={<Fallback />} />
-    </Routes>
+        <Route path="*" element={<Fallback />} />
+      </Routes>
+    </>
   );
 }

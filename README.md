@@ -4,7 +4,7 @@ A private personal finance tracker: accounts, transactions, categories, budgets 
 
 ## Stack
 
-- **Client** — React 19, Vite 8, React Router 7, Tailwind CSS 3.4 (class-based dark mode), Recharts, Motion, lucide-react
+- **Client** — React 19, Vite 8, React Router 7, Tailwind CSS 3.4 (class-based dark mode), Recharts, Motion, Lenis, lucide-react
 - **Server** — Node.js (ESM), Express 4, Mongoose 8, JWT, bcrypt, zod
 - **Database** — MongoDB Atlas
 
@@ -64,7 +64,7 @@ npm run dev
 - Categories: custom income/expense categories
 - Settings: change PIN, change password, theme toggle
 - Light and dark themes, responsive layout, keyboard-friendly forms
-- Marketing landing page at `/` for signed-out visitors
+- Marketing landing page at `/` for signed-out visitors, with scroll-driven storytelling and its own theme switch
 
 ## API
 
