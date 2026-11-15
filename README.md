@@ -118,7 +118,7 @@ Build the client, then start the API with `NODE_ENV=production`. If `client/dist
 
 ### Split: Vercel (web) + Render (API)
 
-1. **Vercel** — import the repo, set the project root to `client`, framework Vite, build `npm run build`, output `dist`. Add `VITE_API_URL=https://api.example.com` (Production and Preview). `client/vercel.json` handles SPA route fallback. Use a custom domain such as `www.example.com`.
+1. **Vercel** — import the repo, set the project root to `client`, framework Vite, build `npm run build`, output `dist`. Add `VITE_API_URL=https://api.example.com` (Production and Preview). `client/vercel.json` handles SPA route fallback. Use a custom domain such as `www.example.com`. Without a custom API domain, drop `VITE_API_URL` and keep the `/api` proxy rewrite in `client/vercel.json` so calls stay same-origin (point the rewrite at your Render host).
 2. **Render** — web service with root directory `server`, build `npm install`, start `npm start`, health check `/api/health`, and a custom domain such as `api.example.com`. Environment:
    ```
    NODE_ENV=production
