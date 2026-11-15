@@ -279,7 +279,7 @@ function Beat({ index, children }) {
         className="max-w-4xl text-center will-change-transform"
       >
         <span className="lp-eyebrow">0{index + 1}</span>
-        <p className="lp-ink mt-6 text-balance text-[clamp(2.2rem,6.4vw,4.8rem)] font-medium leading-[1.06] tracking-[-0.035em]">
+        <p className="lp-ink mt-6 text-balance text-[clamp(2.6rem,8.5vw,5.2rem)] font-medium leading-[1.04] tracking-[-0.04em]">
           {children}
         </p>
       </motion.div>
