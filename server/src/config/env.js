@@ -13,7 +13,7 @@ for (const key of required) {
 
 export const env = {
   mongoUri: process.env.MONGO_URI,
-  mongoDb: process.env.MONGO_DB || 'finmng',
+  mongoDb: process.env.MONGO_DB || 'r2r',
   jwtSecret: process.env.JWT_SECRET,
   port: Number(process.env.PORT) || 5000,
   clientOrigin: process.env.CLIENT_ORIGIN || 'http://localhost:5173',

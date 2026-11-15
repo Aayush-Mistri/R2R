@@ -1,8 +1,8 @@
 {
-  "name": "finmng",
+  "name": "r2r",
   "private": true,
   "version": "1.0.0",
-  "description": "Personal finance tracker",
+  "description": "R2R — personal finance tracker",
   "scripts": {
     "dev": "concurrently -n api,web -c blue,magenta \"npm --prefix server run dev\" \"npm --prefix client run dev\"",
     "dev:server": "npm --prefix server run dev",
