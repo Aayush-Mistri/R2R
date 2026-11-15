@@ -27,7 +27,7 @@ Fill in `.env`:
 | `MONGO_DB` | Database name (default `r2r`) |
 | `JWT_SECRET` | Long random string used to sign tokens |
 | `PORT` | API port (default `5001`) |
-| `CLIENT_ORIGIN` | Allowed browser origin (default `http://localhost:5173`) |
+| `CLIENT_ORIGIN` | Comma-separated allowed browser origins (default `http://localhost:5173`) |
 
 Start both apps:
 
@@ -109,3 +109,27 @@ All resource routes require `Authorization: Bearer <token>`.
 - `.env` is git-ignored — never commit credentials.
 - Amounts are stored as decimal numbers and formatted with `Intl.NumberFormat('en-IN')`.
 - Dates are plain `YYYY-MM-DD` strings so time zones can't shift a transaction into the wrong day.
+
+## Deploying
+
+### Single service (simplest)
+
+Build the client, then start the API with `NODE_ENV=production`. If `client/dist/index.html` exists, the API also serves the SPA and falls back to `index.html` for client-side routes. Set `CLIENT_ORIGIN`, `MONGO_URI`, `MONGO_DB`, and `JWT_SECRET`.
+
+### Split: Vercel (web) + Render (API)
+
+1. **Vercel** — import the repo, set the project root to `client`, framework Vite, build `npm run build`, output `dist`. Add `VITE_API_URL=https://api.example.com` (Production and Preview). `client/vercel.json` handles SPA route fallback. Use a custom domain such as `www.example.com`.
+2. **Render** — web service with root directory `server`, build `npm install`, start `npm start`, health check `/api/health`, and a custom domain such as `api.example.com`. Environment:
+   ```
+   NODE_ENV=production
+   MONGO_URI=...
+   MONGO_DB=r2r
+   JWT_SECRET=<long random string>
+   CLIENT_ORIGIN=https://example.com,https://www.example.com
+   ```
+   Do not set `PORT`; the host provides it.
+3. **Cookies** — the PIN challenge cookie is `SameSite=Lax`, so the web and API domains must share the same registrable domain (`example.com`). Pointing the frontend at `*.onrender.com` will break the PIN step. Serve both over HTTPS; `secure` cookies are enabled in production.
+4. **Database** — allow the host in MongoDB Atlas Network Access and use a scoped database user. Render's IPs are dynamic, so `0.0.0.0/0` is the practical setting.
+5. **DNS** — copy the A/CNAME values Vercel and Render display into your registrar. For GoDaddy: remove the parked `A @` and `CNAME www` records, add Vercel's A record for the apex and CNAME for `www`, and a CNAME `api` pointing at the Render service. Alternatively, move the domain's nameservers to Vercel and manage all records there.
+
+After deploying, check `/api/health`, then register, set a PIN, add a transaction, reload, and confirm the PIN is requested.

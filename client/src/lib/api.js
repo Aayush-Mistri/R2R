@@ -1,5 +1,7 @@
 let accessToken = null;
 
+const API_BASE = (import.meta.env.VITE_API_URL || '').replace(/\/+$/, '');
+
 export const setAccessToken = (token) => {
   accessToken = token;
 };
@@ -20,7 +22,7 @@ async function request(path, { method = 'GET', body, auth = true } = {}) {
 
   let response;
   try {
-    response = await fetch(`/api${path}`, {
+    response = await fetch(`${API_BASE}/api${path}`, {
       method,
       headers,
       credentials: 'include',

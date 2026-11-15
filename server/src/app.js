@@ -1,3 +1,6 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
@@ -10,10 +13,13 @@ import dashboardRoutes from './routes/dashboard.js';
 import { requireAuth } from './middleware/auth.js';
 import { errorHandler, notFound } from './middleware/error.js';
 
-export function createApp() {
+const here = path.dirname(fileURLToPath(import.meta.url));
+
+export function createApp({ serveClient = false } = {}) {
   const app = express();
 
-  app.use(cors({ origin: env.clientOrigin, credentials: true }));
+  app.set('trust proxy', 1);
+  app.use(cors({ origin: env.clientOrigins, credentials: true }));
   app.use(express.json({ limit: '100kb' }));
   app.use(cookieParser());
 
@@ -23,6 +29,15 @@ export function createApp() {
   app.use('/api/categories', requireAuth, categoryRoutes);
   app.use('/api/transactions', requireAuth, transactionRoutes);
   app.use('/api/dashboard', requireAuth, dashboardRoutes);
+
+  const clientDist = path.resolve(here, '../../client/dist');
+  if (serveClient && fs.existsSync(path.join(clientDist, 'index.html'))) {
+    app.use(express.static(clientDist));
+    app.get('*', (req, res, next) => {
+      if (req.path.startsWith('/api/')) return next();
+      return res.sendFile(path.join(clientDist, 'index.html'));
+    });
+  }
 
   app.use(notFound);
   app.use(errorHandler);
