@@ -68,16 +68,15 @@ function PinSetup() {
         <>
           <div>
             <p className="label text-center">New PIN</p>
-            <div className="flex justify-center">
-              <OtpInput
-                length={6}
-                size="md"
-                value={pin}
-                onChange={editPin(setPin)}
-                autoFocus
-                status={error ? 'error' : 'idle'}
-              />
-            </div>
+            <OtpInput
+              length={6}
+              size="md"
+              fluid
+              value={pin}
+              onChange={editPin(setPin)}
+              autoFocus
+              status={error ? 'error' : 'idle'}
+            />
             <p className="mt-2 text-center text-xs text-zinc-400 dark:text-zinc-500">
               4–6 digits. Avoid 1234 or your birth year.
             </p>
@@ -94,16 +93,15 @@ function PinSetup() {
         <>
           <div>
             <p className="label text-center">Confirm PIN</p>
-            <div className="flex justify-center">
-              <OtpInput
-                length={6}
-                size="md"
-                value={confirmPin}
-                onChange={editPin(setConfirmPin)}
-                autoFocus
-                status={error ? 'error' : 'idle'}
-              />
-            </div>
+            <OtpInput
+              length={6}
+              size="md"
+              fluid
+              value={confirmPin}
+              onChange={editPin(setConfirmPin)}
+              autoFocus
+              status={error ? 'error' : 'idle'}
+            />
           </div>
           <button type="submit" className="btn btn-primary w-full" disabled={submitting}>
             {submitting && <Spinner />}
@@ -223,18 +221,17 @@ function PinVerify() {
       )}
 
       <div>
-        <div className="flex justify-center">
-          <OtpInput
-            length={6}
-            size="md"
-            mask
-            value={pin}
-            onChange={handlePinChange}
-            autoFocus
-            disabled={locked || submitting}
-            status={error ? 'error' : 'idle'}
-          />
-        </div>
+        <OtpInput
+          length={6}
+          size="md"
+          fluid
+          mask
+          value={pin}
+          onChange={handlePinChange}
+          autoFocus
+          disabled={locked || submitting}
+          status={error ? 'error' : 'idle'}
+        />
         {attemptsLeft !== null && attemptsLeft > 0 && !locked && (
           <p className="mt-2 text-center text-xs text-zinc-400 dark:text-zinc-500">
             {attemptsLeft} {attemptsLeft === 1 ? 'attempt' : 'attempts'} left before a short lock

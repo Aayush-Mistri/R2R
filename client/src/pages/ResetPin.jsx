@@ -97,28 +97,26 @@ export default function ResetPin() {
 
         <div>
           <p className="label text-center">New PIN</p>
-          <div className="flex justify-center">
-            <OtpInput
-              length={6}
-              size="sm"
-              value={form.pin}
-              onChange={setField('pin')}
-              status={error ? 'error' : 'idle'}
-            />
-          </div>
+          <OtpInput
+            length={6}
+            size="sm"
+            fluid
+            value={form.pin}
+            onChange={setField('pin')}
+            status={error ? 'error' : 'idle'}
+          />
         </div>
 
         <div>
           <p className="label text-center">Confirm PIN</p>
-          <div className="flex justify-center">
-            <OtpInput
-              length={6}
-              size="sm"
-              value={form.confirmPin}
-              onChange={setField('confirmPin')}
-              status={error ? 'error' : 'idle'}
-            />
-          </div>
+          <OtpInput
+            length={6}
+            size="sm"
+            fluid
+            value={form.confirmPin}
+            onChange={setField('confirmPin')}
+            status={error ? 'error' : 'idle'}
+          />
         </div>
 
         <button type="submit" className="btn btn-primary w-full" disabled={submitting}>

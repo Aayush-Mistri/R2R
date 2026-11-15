@@ -107,7 +107,7 @@ export default function Landing() {
 
   return (
     <div className="min-h-dvh bg-white text-zinc-900 transition-colors dark:bg-zinc-950 dark:text-zinc-100">
-      <header className="fixed inset-x-0 top-0 z-40 border-b border-zinc-100 bg-white/85 backdrop-blur dark:border-zinc-800/80 dark:bg-zinc-950/85">
+      <header className="fixed inset-x-0 top-0 z-40 border-b border-zinc-100 bg-white/85 pt-[env(safe-area-inset-top)] backdrop-blur dark:border-zinc-800/80 dark:bg-zinc-950/85">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-8">
           <Brand size={28} />
           <nav className="flex items-center gap-2 sm:gap-3">

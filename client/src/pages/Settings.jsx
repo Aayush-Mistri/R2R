@@ -182,6 +182,7 @@ export default function Settings() {
                 <OtpInput
                   length={6}
                   size="sm"
+                  fluid
                   mask
                   value={pinForm.currentPin}
                   onChange={(value) => {
@@ -197,6 +198,7 @@ export default function Settings() {
                 <OtpInput
                   length={6}
                   size="sm"
+                  fluid
                   value={pinForm.pin}
                   onChange={(value) => {
                     setPinForm((current) => ({ ...current, pin: value }));
@@ -211,6 +213,7 @@ export default function Settings() {
                 <OtpInput
                   length={6}
                   size="sm"
+                  fluid
                   value={pinForm.confirmPin}
                   onChange={(value) => {
                     setPinForm((current) => ({ ...current, confirmPin: value }));

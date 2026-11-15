@@ -44,6 +44,12 @@ const SIZES = {
   },
 };
 
+const FLUID_BOX = {
+  sm: 'h-10 w-full rounded-lg',
+  md: 'h-12 w-full rounded-xl',
+  lg: 'h-14 w-full rounded-2xl',
+};
+
 const SLOT_CLASS =
   'bg-[#F4F4F9] dark:bg-[#262626] text-center font-medium text-transparent caret-transparent outline-none transition-shadow duration-200 selection:bg-transparent disabled:cursor-not-allowed disabled:opacity-50';
 
@@ -75,6 +81,7 @@ export function OtpInput({
   size = 'md',
   status = 'idle',
   mask = false,
+  fluid = false,
   disabled,
   autoFocus,
   className,
@@ -100,6 +107,7 @@ export function OtpInput({
       : toSlots(value, length);
   const numeric = type === 'numbers';
   const scale = SIZES[size];
+  const boxClass = fluid ? FLUID_BOX[size] : scale.box;
   const caretVisible = focused !== null && !slots[focused];
 
   const commit = (next) => {
@@ -206,7 +214,7 @@ export function OtpInput({
     <div
       data-slot="otp-input"
       data-status={status}
-      className={cn('relative inline-flex', className)}
+      className={cn('relative inline-flex', fluid && 'w-full', className)}
       {...props}
     >
       <motion.div
@@ -226,7 +234,10 @@ export function OtpInput({
         }}
         transition={{ duration: 0.32, ease: 'easeOut' }}
         data-slot="otp-input-row"
-        className={cn('relative flex items-center', scale.gap)}
+        className={cn(
+          'relative flex items-center',
+          fluid ? 'w-full gap-1.5 sm:gap-2' : scale.gap
+        )}
       >
         {slots.map((slot, index) => (
           <div
@@ -236,7 +247,7 @@ export function OtpInput({
             }}
             data-slot="otp-input-cell"
             data-filled={Boolean(slot)}
-            className="relative"
+            className={cn('relative', fluid && 'min-w-0 flex-1')}
           >
             <input
               ref={(el) => {
@@ -259,7 +270,7 @@ export function OtpInput({
               aria-label={`${numeric ? 'Digit' : 'Character'} ${index + 1} of ${length}`}
               className={cn(
                 SLOT_CLASS,
-                scale.box,
+                boxClass,
                 scale.text,
                 RING[status],
                 slotClassName

@@ -138,7 +138,7 @@ export default function AppShell({ children }) {
         <SidebarContent />
       </aside>
 
-      <div className="sticky top-0 z-20 flex h-14 items-center gap-2 border-b border-zinc-200/80 bg-white/90 px-4 backdrop-blur dark:border-zinc-800/80 dark:bg-zinc-950/90 lg:hidden">
+      <div className="sticky top-0 z-20 flex h-[calc(3.5rem_+_env(safe-area-inset-top))] items-center gap-2 border-b border-zinc-200/80 bg-white/90 px-4 pt-[env(safe-area-inset-top)] backdrop-blur dark:border-zinc-800/80 dark:bg-zinc-950/90 lg:hidden">
         <button
           type="button"
           onClick={() => setDrawerOpen(true)}
@@ -168,14 +168,14 @@ export default function AppShell({ children }) {
             onClick={() => setDrawerOpen(false)}
             aria-hidden="true"
           />
-          <div className="absolute inset-y-0 left-0 w-[280px] animate-slide-in-left border-r border-zinc-200 bg-white shadow-2xl dark:border-zinc-800 dark:bg-zinc-950">
+          <div className="absolute inset-y-0 left-0 w-[280px] animate-slide-in-left border-r border-zinc-200 bg-white pt-[env(safe-area-inset-top)] shadow-2xl dark:border-zinc-800 dark:bg-zinc-950">
             <SidebarContent onNavigate={() => setDrawerOpen(false)} />
           </div>
         </div>
       )}
 
       <main className="lg:pl-[248px]">
-        <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
+        <div className="mx-auto max-w-6xl px-4 pb-[calc(1.5rem_+_env(safe-area-inset-bottom))] pt-6 sm:px-6 lg:px-8 lg:pb-8 lg:pt-8">
           {children ?? <Outlet />}
         </div>
       </main>
